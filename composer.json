@@ -10,7 +10,9 @@
         "php": "^7.4 || ^8.0",
         "codeigniter4/framework": "^4.0",
         "fpdf/fpdf": "^1.85",
-        "matthew-elisha/fpdf-easytable": "dev-master"
+        "matthew-elisha/fpdf-easytable": "dev-master",
+        "setasign/fpdf": "^1.8",
+        "setasign/fpdi": "^2.3"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9",

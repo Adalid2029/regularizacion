@@ -7,6 +7,9 @@ class Home extends BaseController
 
     public function index()
     {
-        return view('welcome_message');
+        $this->response->setContentType('application/pdf');
+        $reporte = new Reporte();
+        $reporte->reporte2();
+        // return view('welcome_message');
     }
 }
