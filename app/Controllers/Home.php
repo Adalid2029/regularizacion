@@ -9,7 +9,7 @@ class Home extends BaseController
     {
         $this->response->setContentType('application/pdf');
         $reporte = new Reporte();
-        $reporte->reporte2();
+        $reporte->planilla();
         // return view('welcome_message');
     }
 }

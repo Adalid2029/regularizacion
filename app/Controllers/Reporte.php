@@ -14,9 +14,15 @@ class Reporte extends exFPDF
         parent::__construct('P', 'mm', 'Letter');
     }
 
-    public function reporte2()
+    public function planilla()
     {
-
+        $this->cabeceraAsistencia();
+        $this->cuerpoAsistenciaNormal();
+        // $this->cuerpoAsistenciaSeguridad();
+        $this->Output();
+    }
+    public function cabeceraAsistencia()
+    {
         $this->AddPage();
         $this->setSourceFile(APPPATH . "Controllers/plantillaPlanillaRegularizacion.pdf");
         $tplIdx = $this->importPage(1);
@@ -24,7 +30,7 @@ class Reporte extends exFPDF
         $this->Ln(27);
         $this->SetFont('times', 'BU', 16);
         $this->Cell(0, 10, 'PLANILLA DE ASISTENCIA DIARIA', 0, 1, 'C');
-        $table = new easyTable($this, '{26, 50, 20, 70}', 'border:1; font-size:10;');
+        $table = new easyTable($this, '{26, 70, 20, 50}', 'border:0; font-size:10;');
         $table->easyCell(utf8_decode('NOMBRE:'));
         $table->easyCell(utf8_decode('DAVID CALLISAYA QUISPE'), 'font-style:');
         $table->easyCell(utf8_decode('C.I.:'));
@@ -32,30 +38,72 @@ class Reporte extends exFPDF
         $table->printRow();
         $table->easyCell(utf8_decode('ASISTENCIA:'));
         $table->easyCell(utf8_decode('01-12-2022 AL 14-12-2022'), 'font-style:');
+        $table->easyCell(utf8_decode('CODIGO:'));
+        $table->easyCell(utf8_decode('1150'), 'font-style:');
         $table->printRow();
         $table->easyCell(utf8_decode('CARGO:'));
         $table->easyCell(utf8_decode('AUXILIAR DE OFICINA'), 'font-style:');
+        $table->printRow();
         $table->easyCell(utf8_decode('UNIDAD:'));
-        $table->easyCell(utf8_decode('UNIDAD DE TELEVISIÓN UNIVERSITARIA'), 'font-style:');
+        $table->easyCell(utf8_decode('UNIDAD DE TELEVISIÓN UNIVERSITARIA UNIDAD DE TELEVISIÓN UNIVERSITARIA'), 'font-style:; colspan:3');
         $table->printRow();
         $table->endTable();
+    }
+
+    public function cuerpoAsistenciaNormal()
+    {
         $this->Ln(5);
-        $table = new easyTable($this, '{20, 20, 20, 20, 20, 20, 20, 20, 20}', 'border:1; font-size:10; align:{C,C,C,C,C,C,C,C,C}');
+        $table = new easyTable($this, '{20, 15, 30, 13, 30, 15, 30, 13, 30}', 'border:1; font-size:10; align:{C,C,C,C,C,C,C,C,C}');
         $table->easyCell(utf8_decode('Fecha'), 'rowspan:2');
-        $table->easyCell(utf8_decode('Mañana'), 'colspan:4');
-        $table->easyCell(utf8_decode('Tarde'), 'colspan:4');
+        $table->easyCell(utf8_decode('Mañana'), 'colspan:4; align:C');
+        $table->easyCell(utf8_decode('Tarde'), 'colspan:4; align:C');
         $table->printRow();
-        $table->easyCell(utf8_decode('Ingreso'));
-        $table->easyCell(utf8_decode('Firma'));
-        $table->easyCell(utf8_decode('Salida'));
-        $table->easyCell(utf8_decode('Firma'));
-        $table->easyCell(utf8_decode('Ingreso'));
-        $table->easyCell(utf8_decode('Firma'));
-        $table->easyCell(utf8_decode('Salida'));
-        $table->easyCell(utf8_decode('Firma'));
+        $table->easyCell(utf8_decode('Ingreso'), 'align:C');
+        $table->easyCell(utf8_decode('Firma'), 'align:C');
+        $table->easyCell(utf8_decode('Salida'), 'align:C');
+        $table->easyCell(utf8_decode('Firma'), 'align:C');
+        $table->easyCell(utf8_decode('Ingreso'), 'align:C');
+        $table->easyCell(utf8_decode('Firma'), 'align:C');
+        $table->easyCell(utf8_decode('Salida'), 'align:C');
+        $table->easyCell(utf8_decode('Firma'), 'align:C');
         $table->printRow();
 
-        $this->Output();
+        for ($i = 1; $i <= 14; $i++) {
+            $table->rowStyle('min-height:10; valign:M');
+            $table->easyCell(utf8_decode("{$i}-12-2022"), 'align:C');
+            $table->easyCell(utf8_decode('08:00'), 'align:C');
+            $table->easyCell(utf8_decode(''), 'align:C');
+            $table->easyCell(utf8_decode('12:00'), 'align:C');
+            $table->easyCell(utf8_decode(''), 'align:C');
+            $table->easyCell(utf8_decode('13:00'), 'align:C');
+            $table->easyCell(utf8_decode(''), 'align:C');
+            $table->easyCell(utf8_decode('16:00'), 'align:C');
+            $table->easyCell(utf8_decode(''), 'align:C');
+            $table->printRow();
+        }
+    }
+
+    public function cuerpoAsistenciaSeguridad()
+    {
+        $this->Ln(5);
+        $table = new easyTable($this, '{25, 22, 45, 22, 45}', 'border:1; font-size:10; align:{C,C,C,C,C,C,C,C,C}');
+        $table->easyCell(utf8_decode('Fecha'), 'align:C');
+        $table->easyCell(utf8_decode('Ingreso'), 'align:C');
+        $table->easyCell(utf8_decode('Firma'), 'align:C');
+        $table->easyCell(utf8_decode('Salida'), 'align:C');
+        $table->easyCell(utf8_decode('Firma'), 'align:C');
+        $table->printRow();
+
+        for ($i = 1; $i <= 14; $i++) {
+            $table->rowStyle('min-height:10; valign:M');
+            $table->easyCell(utf8_decode("{$i}-12-2022"), 'align:C');
+            $table->easyCell(utf8_decode(''), 'align:C');
+            $table->easyCell(utf8_decode(''), 'align:C');
+            $table->easyCell(utf8_decode(''), 'align:C');
+            $table->easyCell(utf8_decode(''), 'align:C');
+
+            $table->printRow();
+        }
     }
 
     public function reporte()
